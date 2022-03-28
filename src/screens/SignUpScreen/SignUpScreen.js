@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView } from 'react-native'
+import Navigation from '../../navigation';
 import SignInScreen from '../SignInScreen';
+import { useNavigation } from '@react-navigation/native';
 
 
 
@@ -11,6 +13,7 @@ const SignUpScreen = () => {
     const [passwordRepeat, setPasswordRepeat] = useState("");
     const [db, setDb] = useState([]);
 
+    const navigation = useNavigation();
 
     const signUp = () => {
       console.warn('Sign up !')
@@ -36,7 +39,7 @@ const SignUpScreen = () => {
         </TouchableOpacity>
         <View style={styles.info}>
         <Text> Already have an account ?</Text>
-        <TouchableOpacity onPress={() => {SignInScreen}}><Text style={styles.signC}> Login</Text></TouchableOpacity>
+        <TouchableOpacity onPress={() => {navigation.navigate("SignIn")}}><Text style={styles.signC}> Login</Text></TouchableOpacity>
         </View>
         </View>
     )

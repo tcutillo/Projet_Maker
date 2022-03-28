@@ -1,57 +1,33 @@
 import React, { useState } from 'react'
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView } from 'react-native'
 import SignUpScreen from '../SignUpScreen/SignUpScreen';
+import { useNavigation } from '@react-navigation/native';
 
 const SignInScreen = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [db, setDb] = useState([]);
 
+    const navigation = useNavigation();
+
     const signIn = () => {
-      db.map(item => {
-        if (email === item.emails && password === item.passwords) {
-          alertssIn()
-          setSign("connected");
-          axios.get("http://192.168.1.25:8080/Email/" + email)
-          .catch(err =>	{
-            console.log(err);
-          });
-        } else {
-          alertsfIn()
-          setEmail("");
-          setPassword("")
-        }
-        return ""
-      });
+      console.warn('Sign in !')
+      // db.map(item => {
+      //   if (email === item.emails && password === item.passwords) {
+      //     alertssIn()
+      //     setSign("connected");
+      //     axios.get("http://192.168.1.25:8080/Email/" + email)
+      //     .catch(err =>	{
+      //       console.log(err);
+      //     });
+      //   } else {
+      //     alertsfIn()
+      //     setEmail("");
+      //     setPassword("")
+      //   }
+      //   return ""
+      // });
     }
-
-    const signUp = () => {
-      setDb([...db, {emails: email, passwords: password}]);
-      alertssUp()
-      setSign("connected");
-      axios.get("http://192.168.1.25:8080/Email/" + email)
-      .catch(err =>	{
-        console.log(err);
-      });
-    }
-
-    // const SignUpScreen = () => {
-    //   console.warn('Sign up !')
-      // return (
-      //   <View style={styles.logs}>
-      //   <Text style={styles.text1}>Sign Up</Text>
-      //   <TextInput style={styles.input} placeholder="Email *" value={email} onChangeText={setEmail}/>
-      //   <TextInput style={styles.input2} secureTextEntry={true} placeholder="Password *" value={password} onChangeText={setPassword}/>
-      //   <TouchableOpacity onPress={signUp} style={styles.button}>
-      //   <Text style={{color: "#fff"}}>SIGN UP</Text>
-      //   </TouchableOpacity>
-      //   <View style={styles.info}>
-      //   <Text>Vous avez un compte ? </Text>
-      //   <TouchableOpacity onPress={() => {setSign("in")}}><Text style={styles.signC}>Connectez-vous</Text></TouchableOpacity>
-      //   </View>
-      //   </View>
-      // );
-    // }
 
   return (
     <ScrollView>
@@ -66,23 +42,14 @@ const SignInScreen = () => {
       </TouchableOpacity>
       <View style={styles.info}>
       <Text>Don't have an account ? </Text>
-      <TouchableOpacity onPress={SignUpScreen}><Text style={styles.signC}>Register Now</Text></TouchableOpacity>
+      <TouchableOpacity onPress={() => {navigation.navigate("SignUp")}}><Text style={styles.signC}>Register Now</Text></TouchableOpacity>
       </View>
     </View>
     </ScrollView>
   );
 }
 
-// const signUp = () => {
-//   setDb([...db, {emails: email, passwords: password}]);
-//   alertssUp()
-//   setSign("connected");
-//   axios.get("http://192.168.1.25:8080/Email/" + email)
-//   .catch(err =>	{
-//     console.log(err);
-//   });
-// }
-
+// navigation.navigate("SignUp")
 
 const styles = StyleSheet.create({
     main: {
