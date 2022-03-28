@@ -1,49 +1,68 @@
 import React, { useState } from 'react'
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView } from 'react-native'
-import Navigation from '../../navigation';
-import SignInScreen from '../SignInScreen';
 import { useNavigation } from '@react-navigation/native';
 
 
 
 const SignUpScreen = () => {
-    const [username, setUsername] = useState("")
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [passwordRepeat, setPasswordRepeat] = useState("");
-    const [db, setDb] = useState([]);
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordRepeat, setPasswordRepeat] = useState("");
+  const [db, setDb] = useState([]);
 
-    const navigation = useNavigation();
+  const navigation = useNavigation();
 
-    const signUp = () => {
-      console.warn('Sign up !')
-      // setDb([...db, {emails: email, passwords: password}]);
-      // alertssUp()
-      // setSign("connected");
-      // axios.get("http://192.168.1.25:8080/Email/" + email)
-      // .catch(err =>	{
-      //   console.log(err);
-      // });
-    }
+  const signUp = () => {
+    console.warn("Sign up !");
+  };
 
-    return (
-        <View style={styles.logs}>
-        <Text style={styles.text1}>Let's Register your Account</Text>
-        <Text style={styles.text2}>Hello user, you have a greatful journey</Text>
-        <TextInput style={styles.input3} placeholder="UserName *" value={username} onChangeText={setUsername}/>
-        <TextInput style={styles.input} placeholder="Email *" value={email} onChangeText={setEmail}/>
-        <TextInput style={styles.input2} secureTextEntry={true} placeholder="Password *" value={password} onChangeText={setPassword}/>
-        <TextInput style={styles.input4} secureTextEntry={true} placeholder="Password *" value={password} onChangeText={setPassword}/>
-        <TouchableOpacity onPress={signUp} style={styles.button}>
-        <Text style={{color: "#fff"}}>SIGN UP</Text>
-        </TouchableOpacity>
-        <View style={styles.info}>
+  return (
+    <View style={styles.logs}>
+      <Text style={styles.text1}>Let's Register your Account</Text>
+      <Text style={styles.text2}>Hello user, you have a greatful journey</Text>
+      <TextInput
+        style={styles.input3}
+        placeholder="UserName *"
+        value={username}
+        onChangeText={setUsername}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Email *"
+        value={email}
+        onChangeText={setEmail}
+      />
+      <TextInput
+        style={styles.input2}
+        secureTextEntry={true}
+        placeholder="Password *"
+        value={password}
+        onChangeText={setPassword}
+      />
+      <TextInput
+        style={styles.input4}
+        secureTextEntry={true}
+        placeholder="Password *"
+        value={password}
+        onChangeText={setPassword}
+      />
+      <TouchableOpacity onPress={signUp} style={styles.button}>
+        <Text style={{ color: "#fff" }}>SIGN UP</Text>
+      </TouchableOpacity>
+      <View style={styles.info}>
         <Text> Already have an account ?</Text>
-        <TouchableOpacity onPress={() => {navigation.navigate("SignIn")}}><Text style={styles.signC}> Login</Text></TouchableOpacity>
-        </View>
-        </View>
-    )
-}
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("SignIn");
+          }}
+        >
+          <Text style={styles.signC}> Login</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
     main: {
