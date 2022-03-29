@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
+import { Controller, useForm } from 'react-hook-form';
 
 
 
@@ -12,6 +13,7 @@ const SignUpScreen = () => {
   const [db, setDb] = useState([]);
 
   const navigation = useNavigation();
+  const {control, handleSubmit} = useForm();
 
   const signUp = () => {
     console.warn("Sign up !");
@@ -21,11 +23,18 @@ const SignUpScreen = () => {
     <View style={styles.logs}>
       <Text style={styles.text1}>Let's Register your Account</Text>
       <Text style={styles.text2}>Hello user, you have a greatful journey</Text>
-      <TextInput
-        style={styles.input3}
-        placeholder="UserName *"
-        value={username}
-        onChangeText={setUsername}
+      <Controller
+        control={control}
+        name="username"
+        render={({ field: { value, onChange, onBlur } }) => (
+          <TextInput
+            style={styles.input}
+            placeholder="UserName *"
+            value={value}
+            onChangeText={onChange}
+            onBlur={onBlur}
+          />
+        )}
       />
       <TextInput
         style={styles.input}
@@ -100,7 +109,8 @@ const styles = StyleSheet.create({
     },
     text2: {
         fontSize: 25,
-        marginTop: 10,
+        marginTop: 5,
+        marginBottom: 15,
         left: -10,
         color: '#000000',
       },

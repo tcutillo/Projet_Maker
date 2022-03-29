@@ -5,17 +5,17 @@ import {UseForm, Controller, useForm} from 'react-hook-form'
 
 
 const SignInScreen = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [db, setDb] = useState([]);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [db, setDb] = useState([]);
 
-    const navigation = useNavigation();
-    const {control, handleSubmit} = useForm();
+  const navigation = useNavigation();
+  const {control, handleSubmit} = useForm();
 
-    const OnSignPressed = () => {
-      console.warn('Sign in !');
-      navigation.navigate("Home");
-    }
+  const OnSignPressed = data => {
+    console.log(data);
+    navigation.navigate("Home");
+  };
 
   return (
     <ScrollView>
@@ -24,11 +24,18 @@ const SignInScreen = () => {
         <Text style={styles.text2}>Welcome Back ,</Text>
         <Text style={styles.text3}>You have been missed</Text>
 
-        <TextInput
+        <Controller
+          control={control}
+          name="email"
+          render={({field: {value, onChange, onBlur}}) => (
+            <TextInput
           style={styles.input}
           placeholder="Email *"
-          value={email}
-          onChangeText={setEmail}
+          value={value}
+          onChangeText={onChange}
+          onBlur={onBlur}
+        />
+          )}
         />
         <TextInput
           style={styles.input2}
@@ -120,7 +127,7 @@ const styles = StyleSheet.create({
   input: {
     height: 45,
     width: 360,
-    marginTop: 80,
+    marginTop: 70,
     borderWidth: 1,
     padding: 10,
     borderRadius: 5,
