@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import Navigation from './src/navigation';
 import { NavigationContainer } from '@react-navigation/native';
 
+
 export default function App() {
   return (
     <Navigation/>

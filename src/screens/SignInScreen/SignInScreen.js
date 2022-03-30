@@ -24,18 +24,11 @@ const SignInScreen = () => {
         <Text style={styles.text2}>Welcome Back ,</Text>
         <Text style={styles.text3}>You have been missed</Text>
 
-        <Controller
-          control={control}
-          name="email"
-          render={({field: {value, onChange, onBlur}}) => (
-            <TextInput
+        <TextInput
           style={styles.input}
           placeholder="Email *"
-          value={value}
-          onChangeText={onChange}
-          onBlur={onBlur}
-        />
-          )}
+          value={email}
+          onChangeText={setEmail}
         />
         <TextInput
           style={styles.input2}

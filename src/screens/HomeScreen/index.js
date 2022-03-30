@@ -1,12 +1,14 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import React from "react";
+import { View, Text } from "react-native";
+import { useAuth } from "../../../firebase";
 
 const HomePage = () => {
-    return (
-        <View>
-            <Text>Home Sweat Home</Text>
-        </View>
-    );
+    const currentUser = useAuth();
+  return (
+    <View>
+      <Text>Currently logged in as: {currentUser?.email}</Text>
+    </View>
+  );
 };
 
-export default HomePage
+export default HomePage;
