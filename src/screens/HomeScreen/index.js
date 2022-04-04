@@ -1,14 +1,117 @@
-import React from "react";
-import { View, Text } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+  Image,
+  SafeAreaView,
+} from "react-native";
 import { useAuth } from "../../../firebase";
+import { useNavigation } from "@react-navigation/native";
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import { GOOGLE_MAPS_APIKEY } from "@env";
+import { useDispatch } from "react-redux";
+import { setDestination, setOrigin } from "../../../slices/navSlice";
 
 const HomePage = () => {
-    const currentUser = useAuth();
+  const dispatch = useDispatch();
+  const [username, setUsername] = useState("");
+  const [wherefrom, setWherefrom] = useState("");
+  const navigation = useNavigation();
+  const currentUser = useAuth();
+
   return (
-    <View>
-      <Text>Currently logged in as: {currentUser?.email}</Text>
-    </View>
+    <SafeAreaView>
+      <View>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("SignIn");
+          }}
+        >
+          <Image
+            style={{
+              width: 40,
+              height: 40,
+              resizeMode: "contain",
+              left: 20,
+              top: 10,
+            }}
+            source={require("../../../assets/arrow.png")}
+          />
+        </TouchableOpacity>
+        <Text style={styles.destination}> DESTINATION </Text>
+        {/* <Text>Currently logged in as: {currentUser?.email}</Text> */}
+        <GooglePlacesAutocomplete
+          placeholder="Wher from *"
+          styles={{
+            container: {
+              flex: 0,
+              width: 300,
+              left: 30,
+            },
+            textInput: {
+              fontSize: 18,
+            },
+          }}
+          onPress={(data, details = null) => {
+            dispatch(
+              setOrigin({
+                location: details.geometry.location,
+                description: data.description,
+              })
+            );
+            dispatch(setDestination(null));
+          }}
+          fetchDetails={true}
+          returnKeyType={"search"}
+          enablePoweredByContainer={false}
+          minLength={2}
+          onFail={(error) => console.error(error)}
+          query={{
+            key: "AIzaSyCffod3g_2GfJvHflG1fhb6DlscfGhJrxs",
+            language: "en",
+          }}
+          nearbyPlacesAPI="GooglePlacesSearch"
+          debounce={400}
+        />
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("Map");
+          }}
+          style={styles.button}
+        >
+          <Text style={{ color: "#fff" }}>START</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  destination: {
+    marginTop: 10,
+    marginBottom: 10,
+    fontSize: 40,
+    left: 55,
+    color: "#000000",
+    fontWeight: "bold",
+    textDecorationLine: "underline",
+  },
+  button: {
+    width: 150,
+    height: 30,
+    left: 80,
+    backgroundColor: "#00ff00",
+    borderRadius: 5,
+    borderWidth: 1,
+    marginBottom: 25,
+    borderColor: "#00ff00",
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#000",
+  },
+});
 
 export default HomePage;

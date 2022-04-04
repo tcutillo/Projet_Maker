@@ -1,8 +1,14 @@
-import React, { useState } from 'react'
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView } from 'react-native'
-import { useNavigation } from '@react-navigation/native';
-import {UseForm, Controller, useForm} from 'react-hook-form'
-
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { UseForm, Controller, useForm } from "react-hook-form";
 
 const SignInScreen = () => {
   const [email, setEmail] = useState("");
@@ -10,9 +16,9 @@ const SignInScreen = () => {
   const [db, setDb] = useState([]);
 
   const navigation = useNavigation();
-  const {control, handleSubmit} = useForm();
+  const { control, handleSubmit } = useForm();
 
-  const OnSignPressed = data => {
+  const OnSignPressed = (data) => {
     console.log(data);
     navigation.navigate("Home");
   };
@@ -54,7 +60,7 @@ const SignInScreen = () => {
       </View>
     </ScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   main: {
@@ -86,13 +92,13 @@ const styles = StyleSheet.create({
   text1: {
     fontSize: 40,
     marginTop: 80,
-    left: -35,
+    left: -27,
     fontWeight: "bold",
     color: "#00ff00",
   },
   text2: {
     fontSize: 30,
-    marginTop: 30,
+    marginTop: 25,
     left: -75,
     color: "#000000",
   },
@@ -231,4 +237,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignInScreen
+export default SignInScreen;
