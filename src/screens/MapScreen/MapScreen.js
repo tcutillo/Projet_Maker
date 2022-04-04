@@ -11,17 +11,25 @@ import {
 import tw from "tailwind-react-native-classnames";
 import { useDispatch, useSelector } from "react-redux";
 import MapView, { Marker } from "react-native-maps";
-import { selectDestination, selectOrigin } from "../../../slices/navSlice";
+import {
+  selectDestination,
+  selectOrigin,
+  selectTravelTimeInformation,
+  setTravelTimeInformation,
+} from "../../../slices/navSlice";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { setDestination } from "../../../slices/navSlice";
 import { useNavigation } from "@react-navigation/native";
 import MapViewDirections from "react-native-maps-directions";
-import { useRef} from "react";
+import { GOOGLE_MAPS_APIKEY } from "@env";
+import { useRef } from "react";
+import { async } from "@firebase/util";
 
 const Map = () => {
   const origin = useSelector(selectOrigin);
   const destination = useSelector(selectDestination);
   const mapRef = useRef(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!origin || !destination) return;
@@ -35,6 +43,23 @@ const Map = () => {
       },
     });
   }, [origin, destination]);
+
+  useEffect(() => {
+    if (!origin || !destination) return;
+
+    const getTravelTime = async () => {
+      fetch(
+        `https://maps.googleapis.com/maps/api/distancematrix/json?
+        units=imperial&origins=${origin.description}&destinations=${destination.description}
+        &key=${GOOGLE_MAPS_APIKEY}`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          dispatch(setTravelTimeInformation(data.rows[0].elements[0]));
+        });
+    };
+    getTravelTime();
+  }, [origin, destination, GOOGLE_MAPS_APIKEY]);
 
   return (
     <MapView
@@ -87,7 +112,7 @@ const Map = () => {
 
 const MapScreen = () => {
   const dispatch = useDispatch();
-  const navigation = useNavigation();
+  const travelTimeInformation = useSelector(selectTravelTimeInformation);
 
   return (
     <View>
@@ -98,6 +123,9 @@ const MapScreen = () => {
       <View style={tw`h-1/2`}>
         <SafeAreaView>
           <View style={tw`border-t border-gray-200 flex-shrink`}>
+            <Text style={tw`text-center py-5 text-xl`}>
+              Good Morning, Sonny
+            </Text>
             <View>
               <GooglePlacesAutocomplete
                 styles={{
@@ -106,6 +134,7 @@ const MapScreen = () => {
                     width: 300,
                     left: 35,
                     top: 0,
+                    marginBottom: 30,
                   },
                   textInput: {
                     fontSize: 18,
@@ -135,6 +164,12 @@ const MapScreen = () => {
                 <Text style={{ color: "#fff" }}>Start</Text>
               </TouchableOpacity> */}
             </View>
+            <Text style={tw`text-center py-5 text-l`}>
+              Travel Time - {travelTimeInformation?.distance.text}
+            </Text>
+            <Text style={tw`text-center py-5 text-l`}>
+              Travel Distance - {travelTimeInformation?.duration.text}
+            </Text>
           </View>
         </SafeAreaView>
       </View>

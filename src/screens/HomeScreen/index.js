@@ -14,6 +14,7 @@ import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplet
 import { GOOGLE_MAPS_APIKEY } from "@env";
 import { useDispatch } from "react-redux";
 import { setDestination, setOrigin } from "../../../slices/navSlice";
+import tw from "tailwind-react-native-classnames";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -41,7 +42,12 @@ const HomePage = () => {
             source={require("../../../assets/arrow.png")}
           />
         </TouchableOpacity>
-        <Text style={styles.destination}> DESTINATION </Text>
+        <Text style={tw`text-center py-5 text-xl`}>
+          Welcome back, {currentUser?.email}
+        </Text>
+        <Text style={styles.destination}>
+          Where are you ? 
+        </Text>
         {/* <Text>Currently logged in as: {currentUser?.email}</Text> */}
         <GooglePlacesAutocomplete
           placeholder="Wher from *"
@@ -49,7 +55,7 @@ const HomePage = () => {
             container: {
               flex: 0,
               width: 300,
-              left: 30,
+              left: 40,
             },
             textInput: {
               fontSize: 18,
@@ -82,7 +88,7 @@ const HomePage = () => {
           }}
           style={styles.button}
         >
-          <Text style={{ color: "#fff" }}>START</Text>
+          <Text style={{ color: "#000000" }}>START</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -91,21 +97,22 @@ const HomePage = () => {
 
 const styles = StyleSheet.create({
   destination: {
-    marginTop: 10,
-    marginBottom: 10,
-    fontSize: 40,
-    left: 55,
+    marginTop: 30,
+    marginBottom: 15,
+    fontSize: 30,
+    left: 85,
     color: "#000000",
     fontWeight: "bold",
-    textDecorationLine: "underline",
+
   },
   button: {
     width: 150,
     height: 30,
-    left: 80,
+    left: 110,
     backgroundColor: "#00ff00",
     borderRadius: 5,
     borderWidth: 1,
+    marginTop: 30,
     marginBottom: 25,
     borderColor: "#00ff00",
     alignItems: "center",
