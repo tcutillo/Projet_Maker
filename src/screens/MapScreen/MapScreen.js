@@ -51,21 +51,22 @@ const Map = () => {
       fetch(
         `https://maps.googleapis.com/maps/api/distancematrix/json?
         units=imperial&origins=${origin.description}&destinations=${destination.description}
-        &key=${GOOGLE_MAPS_APIKEY}`
+        &key=AIzaSyCffod3g_2GfJvHflG1fhb6DlscfGhJrxs`
       )
         .then((res) => res.json())
         .then((data) => {
           dispatch(setTravelTimeInformation(data.rows[0].elements[0]));
+          console.log(data);
         });
     };
     getTravelTime();
-  }, [origin, destination, GOOGLE_MAPS_APIKEY]);
+  }, [origin, destination, "AIzaSyCffod3g_2GfJvHflG1fhb6DlscfGhJrxs"]);
 
   return (
     <MapView
       ref={mapRef}
-      style={tw`flex-1`}
       mapType="mutedStandard"
+      style={tw`flex-1`}
       initialRegion={{
         latitude: origin.location.lat,
         longitude: origin.location.lng,
@@ -95,14 +96,14 @@ const Map = () => {
         />
       )}
 
-      {origin?.location && (
+      {destination?.location && (
         <Marker
           coordinate={{
-            latitude: origin.location.lat,
-            longitude: origin.location.lng,
+            latitude: destination.location.lat,
+            longitude: destination.location.lng,
           }}
           title="Destination"
-          description={origin.description}
+          description={destination.description}
           identifier="destination"
         />
       )}
@@ -113,6 +114,8 @@ const Map = () => {
 const MapScreen = () => {
   const dispatch = useDispatch();
   const travelTimeInformation = useSelector(selectTravelTimeInformation);
+  const origin = useSelector(selectOrigin);
+  const navigation = useNavigation();
 
   return (
     <View>
@@ -122,10 +125,8 @@ const MapScreen = () => {
 
       <View style={tw`h-1/2`}>
         <SafeAreaView>
+          <Text style={tw`text-center py-5 text-xl`}>Good Morning, Sonny</Text>
           <View style={tw`border-t border-gray-200 flex-shrink`}>
-            <Text style={tw`text-center py-5 text-xl`}>
-              Good Morning, Sonny
-            </Text>
             <View>
               <GooglePlacesAutocomplete
                 styles={{
@@ -134,7 +135,7 @@ const MapScreen = () => {
                     width: 300,
                     left: 35,
                     top: 0,
-                    marginBottom: 30,
+                    marginBottom: 10,
                   },
                   textInput: {
                     fontSize: 18,
@@ -160,16 +161,21 @@ const MapScreen = () => {
                 nearbyPlacesAPI="GooglePlacesSearch"
                 debounce={400}
               />
-              {/* <TouchableOpacity onPress={OnSignPressed} style={styles.button}>
-                <Text style={{ color: "#fff" }}>Start</Text>
-              </TouchableOpacity> */}
             </View>
-            <Text style={tw`text-center py-5 text-l`}>
+            <Text style={tw`text-center py-5 text-xl`}>
               Travel Time - {travelTimeInformation?.distance.text}
             </Text>
-            <Text style={tw`text-center py-5 text-l`}>
+            <Text style={tw`text-center py-5 text-xl`}>
               Travel Distance - {travelTimeInformation?.duration.text}
             </Text>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("Home");
+              }}
+              style={styles.buttons}
+            >
+              <Text>Done</Text>
+            </TouchableOpacity>
           </View>
         </SafeAreaView>
       </View>
@@ -179,13 +185,29 @@ const MapScreen = () => {
 
 const styles = StyleSheet.create({
   buttons: {
-    width: 100,
+    width: 80,
     height: 30,
-    backgroundColor: "#326ed5",
+    left: 145,
+    backgroundColor: "#00ff00",
     borderRadius: 5,
     borderWidth: 1,
-    marginTop: 10,
-    borderColor: "#777",
+    marginTop: 20,
+    marginBottom: 25,
+    borderColor: "#000000",
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#000",
+  },
+  button: {
+    width: 80,
+    height: 30,
+    left: 145,
+    backgroundColor: "#00ff00",
+    borderRadius: 5,
+    borderWidth: 1,
+    marginTop: 20,
+    marginBottom: 25,
+    borderColor: "#000000",
     alignItems: "center",
     justifyContent: "center",
     shadowColor: "#000",
