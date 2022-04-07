@@ -32,6 +32,7 @@
     "react-native-web": "0.17.1",
     "react-native-webview": "11.15.0",
     "react-redux": "^7.2.8",
+    "redux": "^4.1.2",
     "tailwind-react-native-classnames": "^1.5.1",
     "tailwind-rn": "^4.2.0"
   },

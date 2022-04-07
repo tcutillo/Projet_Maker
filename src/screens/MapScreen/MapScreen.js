@@ -162,19 +162,27 @@ const MapScreen = () => {
                 debounce={400}
               />
             </View>
-            <Text style={tw`text-center py-5 text-xl`}>
-              Travel Time - {travelTimeInformation?.distance.text}
+            <Text style={tw`text-center py-2 text-xl`}>
+              Travel Distance - {travelTimeInformation?.distance.text}
             </Text>
-            <Text style={tw`text-center py-5 text-xl`}>
-              Travel Distance - {travelTimeInformation?.duration.text}
+            <Text style={tw`text-center py-4 text-xl`}>
+              Travel Time - {travelTimeInformation?.duration.text}
             </Text>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate("Home");
+                navigation.navigate("FinalScreen");
               }}
               style={styles.buttons}
             >
               <Text>Done</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("Home");
+              }}
+              style={styles.button}
+            >
+              <Text>Cancel</Text>
             </TouchableOpacity>
           </View>
         </SafeAreaView>
@@ -192,7 +200,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     marginTop: 20,
-    marginBottom: 25,
+    marginBottom: 20,
     borderColor: "#000000",
     alignItems: "center",
     justifyContent: "center",
@@ -202,10 +210,10 @@ const styles = StyleSheet.create({
     width: 80,
     height: 30,
     left: 145,
-    backgroundColor: "#00ff00",
+    backgroundColor: "#ff0000",
     borderRadius: 5,
     borderWidth: 1,
-    marginTop: 20,
+    marginTop: 0,
     marginBottom: 25,
     borderColor: "#000000",
     alignItems: "center",
