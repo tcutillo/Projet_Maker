@@ -8,6 +8,7 @@ import {
   Image,
   SafeAreaView,
 } from "react-native";
+import tw from "tailwind-react-native-classnames";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -21,6 +22,7 @@ import { setDestination } from "../../../slices/navSlice";
 const FinalScreen = () => {
   const origin = useSelector(selectOrigin);
   const destination = useSelector(selectDestination);
+  const travelTimeInformation = useSelector(selectTravelTimeInformation);
 
   return (
     <SafeAreaView>
@@ -28,7 +30,10 @@ const FinalScreen = () => {
         <Text style={styles.destination}>Latest Course</Text>
       </View>
       <View>
-        <Text>You want from </Text>
+        <Text style={tw`text-center py-2 text-xl`}>
+          You walkt {travelTimeInformation?.distance.text} from{" "}
+          {origin.description} to {destination.description}
+        </Text>
       </View>
       <View>
         <TouchableOpacity></TouchableOpacity>
